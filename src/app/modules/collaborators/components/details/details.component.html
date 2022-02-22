@@ -1,0 +1,18 @@
+
+<mat-card *ngIf="collaborator">
+  <img mat-card-avatar src="{{ collaborator.photo_url }}">
+  <mat-card-title>{{ collaborator.name }}</mat-card-title>
+  <mat-card-subtitle>{{ collaborator.email }}</mat-card-subtitle>
+  <mat-card-content>
+    <p><b>Role:</b> {{ collaborator.job_title }}</p>
+    <p><b>Admission date:</b> {{ collaborator.admission_date }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <a
+      [routerLink]="[editRoute, collaborator.id]"
+      mat-raised-button
+      color="primary">
+      Edit
+    </a>
+  </mat-card-actions>
+</mat-card>

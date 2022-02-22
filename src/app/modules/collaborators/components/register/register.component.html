@@ -1,0 +1,29 @@
+
+<form *ngIf="form" [formGroup]="form">
+  <mat-form-field appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="name">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>E-mail</mat-label>
+    <input matInput formControlName="email">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Foto</mat-label>
+    <input matInput formControlName="photo_url">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Data de admissão</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="admission_date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Cargo</mat-label>
+    <input matInput formControlName="job_title">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</form>
