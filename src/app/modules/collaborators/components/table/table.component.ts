@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Sort } from '@angular/material/sort';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { firstValueFrom, lastValueFrom, of } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
 import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
 import { ROUTES } from 'src/app/modules/shared/constants/routes.constants';
+import { CollaboratorResponse } from 'src/app/modules/shared/utils/interfaces/collaborator-response.interface';
 import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
-import { SimpleObject } from 'src/app/modules/shared/utils/interfaces/simple-object.interface';
+import { CollaboratorsResponse } from 'src/app/modules/shared/utils/interfaces/collaborators-response.interface';
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
 
 @Component({
@@ -14,55 +17,54 @@ import { CollaboratorService } from 'src/app/repositories/collaborator/collabora
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
-  collaborators: Collaborator[] = [];
-  sortedCollaborators: Collaborator[] = [];
+export class TableComponent implements AfterViewInit {
+  private _collaborators: Collaborator[] | null = null;
   registerRoute = ROUTES.REGISTER;
+
+  displayedColumns = ['name', 'job_title', 'admission_date', 'email'];
+  dataSource = new MatTableDataSource<Collaborator>([]);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private collaboratorService: CollaboratorService,
     private router: Router,
   ) {}
-
-  ngOnInit(): void {
+  
+  ngAfterViewInit() {
     this.getCollaborators();
   }
 
   async getCollaborators(): Promise<void> {
     const $subject = this.collaboratorService.getAll();
-    const result: {users: Collaborator[]} | Object = await lastValueFrom($subject);
+    const result: CollaboratorsResponse | Object = await lastValueFrom($subject);
 
     if (!result.hasOwnProperty(GLOBAL.USERS)) {
       window.alert(MESSAGES.ERROR.COLLAB_LISTING);
       return;
     }
 
-    this.collaborators = (result as {users: Collaborator[]}).users;
-    this.sortedCollaborators = this.collaborators.slice();
+    this.collaborators = (result as CollaboratorsResponse).users;
+    this.dataSource = new MatTableDataSource<Collaborator>(this.collaborators);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
-
-  // TODO: pagination
-  // criar serviço de fechada pra lidar com a paginação ou buscar biblioteca pronta
-  sortCollaborators(sort: Sort) {
-    const data = this.collaborators.slice();
-
-    if (!sort.active || !sort.direction) {
-      this.sortedCollaborators = data;
-      return;
-    }
-
-    this.sortedCollaborators = data.sort((a: SimpleObject, b: SimpleObject) => {
-      const isAsc = sort.direction === GLOBAL.ASC_ORDER;
-      return this.compare(a[sort.active], b[sort.active], isAsc);
-    });
-  }
-
-  compare(a: any, b: any, isAsc: boolean): number {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  
+  applyFilter(query: string) {
+    const parsedQuery = query.trim().toLowerCase(); 
+    this.dataSource.filter = parsedQuery;
   }
 
   navigateToDetails(id: number): void {
     this.router.navigate([ROUTES.DETAILS, id]);
   }
 
+  get collaborators(): Collaborator[] {
+    return this._collaborators as Collaborator[];
+  }
+
+  set collaborators(collaborators) {
+    this._collaborators = collaborators;
+  }
 }

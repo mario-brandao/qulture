@@ -1,0 +1,20 @@
+@import 'src/assets/scss/variables';
+
+.app-header {
+  padding: 1.5rem 0;
+  .header-nav {
+    &-list {
+      text-align: right;
+      &-item {
+        display: inline-block;
+        color: $primary;
+        &:first-child {
+          float: left;
+        }
+      }
+    }
+    &-link {
+      text-decoration: none;
+    }
+  }
+}

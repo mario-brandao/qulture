@@ -1,0 +1,8 @@
+
+<mat-card *ngFor="let comment of comments" class="comment">
+  <mat-card-title>{{ comment.user?.name }}</mat-card-title>
+  <mat-card-subtitle>{{ comment.user?.job_title }}</mat-card-subtitle>
+  <mat-card-content>
+    <p>{{ comment.value }}</p>
+  </mat-card-content>
+</mat-card>

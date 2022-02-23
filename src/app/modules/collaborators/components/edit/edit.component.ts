@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Subscription } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
 import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
+import { ROUTES } from 'src/app/modules/shared/constants/routes.constants';
 import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
 
@@ -20,6 +21,7 @@ export class EditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private collaboratorService: CollaboratorService
   ) {
     this.form = null;
@@ -85,6 +87,10 @@ export class EditComponent implements OnInit {
       return;
     }
     window.alert(MESSAGES.SUCCESS.COLLAB_EDITION);
+  }
+  
+  navigateToDetails(): void {
+    this.router.navigate([ROUTES.DETAILS, this.collaborator.id]);
   }
 
   get collaborator(): Collaborator {

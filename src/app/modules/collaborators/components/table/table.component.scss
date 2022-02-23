@@ -1,0 +1,23 @@
+
+.collaborators-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  .btn-create {
+    margin-top: .6rem;
+  }
+}
+.collab-table {
+  width: 100%;
+  &-wrapper {
+    max-width: 100%;
+    overflow: auto;
+  }
+
+  .mat-header-cell,
+  .mat-cell {
+    padding: 0 1.5rem;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+}

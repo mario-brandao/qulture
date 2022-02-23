@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseAPI: 'https://qr-challenge.herokuapp.com/',
+  baseAPI: 'https://qr-challenge.herokuapp.com/api/v1/',
 };
 
 /*

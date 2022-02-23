@@ -12,10 +12,13 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { CommentsComponent } from './components/comments/comments.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CommentsComponent
+  ],
   imports: [
     CommonModule,
     MatSliderModule,
@@ -29,6 +32,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatPaginatorModule,
   ],
   exports: [
     MatSliderModule,
@@ -42,6 +46,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatPaginatorModule,
+    CommentsComponent,
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}
