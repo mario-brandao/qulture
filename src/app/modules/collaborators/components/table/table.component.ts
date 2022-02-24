@@ -8,7 +8,6 @@ import { lastValueFrom, Subscription } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
 import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
 import { ROUTES } from 'src/app/modules/shared/constants/routes.constants';
-import { CollaboratorResponse } from 'src/app/modules/shared/utils/interfaces/collaborator-response.interface';
 import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
 import { CollaboratorsResponse } from 'src/app/modules/shared/utils/interfaces/collaborators-response.interface';
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
@@ -35,7 +34,7 @@ export class TableComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     private _snackBar: MatSnackBar,
   ) {}
-  
+
   ngAfterViewInit() {
     this.getCollaborators();
   }
@@ -68,7 +67,7 @@ export class TableComponent implements AfterViewInit, OnDestroy {
     const matchesRole = data.job_title.toLowerCase().includes(filter);
     return matchesName || matchesEmail || matchesRole;
   }
-  
+
   watchVisibleCollaborators(): void {
     const paginationSubject = (this.dataSource.paginator as MatPaginator).page.subscribe((pageEvent: PageEvent) => {
       this.setConsideredCommentAuthors();
@@ -87,7 +86,7 @@ export class TableComponent implements AfterViewInit, OnDestroy {
     const endIndex = startIndex + paginator.pageSize;
     this.consideredCommentAuthors = this.dataSource.filteredData.slice(startIndex, endIndex);
   }
-  
+
   applyFilter(query: string) {
     const parsedQuery = query.trim().toLowerCase();
     this.dataSource.filter = parsedQuery;

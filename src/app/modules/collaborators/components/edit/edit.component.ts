@@ -97,12 +97,12 @@ export class EditComponent implements OnInit {
     this._snackBar.open(MESSAGES.SUCCESS.COLLAB_EDITION);
     this.navigateToDetails();
   }
-  
+
   reactToLoadError(): void {
     this._snackBar.open(MESSAGES.ERROR.GETTING_COLLABORATOR, GLOBAL.OK);
     this.router.navigate(['']);
   }
-  
+
   navigateToDetails(): void {
     this.router.navigate([ROUTES.DETAILS, this.collaborator.id]);
   }

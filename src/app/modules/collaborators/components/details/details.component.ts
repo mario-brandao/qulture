@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Subscription } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
+import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
 import { ROUTES } from 'src/app/modules/shared/constants/routes.constants';
 import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
 
 @Component({
   selector: 'app-details',

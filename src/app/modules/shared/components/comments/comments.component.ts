@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { lastValueFrom } from 'rxjs';
 import { CommentService } from 'src/app/repositories/comment/comment.service';
@@ -31,7 +31,7 @@ export class CommentsComponent implements AfterViewInit {
   async getComments(): Promise<void> {
     const $subject = this.commentService.getByCollaborator(this.userId);
     const result: CommentResponse | Object = await lastValueFrom($subject);
-    
+
     if (!result.hasOwnProperty(GLOBAL.COMMENTS)) {
       this._snackBar.open(MESSAGES.ERROR.GETTING_COMMENTS, GLOBAL.OK);
       return;
