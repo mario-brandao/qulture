@@ -14,6 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommentsComponent } from './components/comments/comments.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { CommentsComponent } from './components/comments/comments.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatPaginatorModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatSliderModule,
@@ -48,6 +50,7 @@ import { CommentsComponent } from './components/comments/comments.component';
     MatNativeDateModule,
     MatPaginatorModule,
     CommentsComponent,
+    MatSnackBarModule,
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}

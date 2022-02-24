@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { lastValueFrom } from 'rxjs';
 import { CommentService } from 'src/app/repositories/comment/comment.service';
 import { GLOBAL } from '../../constants/global.constants';
@@ -14,9 +15,14 @@ import { CommentResponse } from '../../utils/interfaces/comment-response.interfa
 export class CommentsComponent implements AfterViewInit {
 
   @Input() userId: number = 0;
+  @Input() showVoidMessage: boolean = false;
   comments: Comment[] = [];
+  loading: boolean = true;
 
-  constructor(private commentService: CommentService) { }
+  constructor(
+    private commentService: CommentService,
+    private _snackBar: MatSnackBar,
+  ) { }
 
   ngAfterViewInit(): void {
     this.getComments();
@@ -27,11 +33,12 @@ export class CommentsComponent implements AfterViewInit {
     const result: CommentResponse | Object = await lastValueFrom($subject);
     
     if (!result.hasOwnProperty(GLOBAL.COMMENTS)) {
-      window.alert(MESSAGES.ERROR.GETTING_COMMENTS);
+      this._snackBar.open(MESSAGES.ERROR.GETTING_COMMENTS, GLOBAL.OK);
       return;
     }
 
     this.comments = (result as CommentResponse).comments || [];
+    this.loading = false;
   }
 
 }

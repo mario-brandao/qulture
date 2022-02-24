@@ -9,8 +9,9 @@
 }
 .collab-table {
   width: 100%;
+  padding: 0;
   &-wrapper {
-    max-width: 100%;
+    width: 100%;
     overflow: auto;
   }
 
@@ -20,4 +21,7 @@
     vertical-align: middle;
     cursor: pointer;
   }
+}
+.mat-paginator {
+  width: 100%;
 }

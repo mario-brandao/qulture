@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Subscription } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
@@ -22,7 +23,8 @@ export class EditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private collaboratorService: CollaboratorService
+    private collaboratorService: CollaboratorService,
+    private _snackBar: MatSnackBar,
   ) {
     this.form = null;
   }
@@ -39,7 +41,9 @@ export class EditComponent implements OnInit {
   reactToRouteParams(): void {
     const routeSubscription = this.route.params.subscribe((params: {[key: string]: string}) => {
       const idParam = +params['id'];
-      if (!isNaN(idParam)) {
+      if (isNaN(idParam)) {
+        this.reactToLoadError();
+      } else {
         this.getCollaboratorByRoute(idParam);
       }
     });
@@ -71,7 +75,7 @@ export class EditComponent implements OnInit {
     const result: {users: Collaborator} | Object = await lastValueFrom($subject);
 
     if (!result.hasOwnProperty(GLOBAL.USER)) {
-      window.alert('Error');
+      this.reactToLoadError();
       return;
     }
 
@@ -83,10 +87,15 @@ export class EditComponent implements OnInit {
     const $subject = this.collaboratorService.patch(this.collaborator.id, this.form?.value);
     const result: {user: Collaborator} | Object = await lastValueFrom($subject);
     if (!result.hasOwnProperty(GLOBAL.USER)) {
-      window.alert(MESSAGES.ERROR.COLLAB_EDITION);
+      this._snackBar.open(MESSAGES.ERROR.COLLAB_EDITION, GLOBAL.OK);
       return;
     }
-    window.alert(MESSAGES.SUCCESS.COLLAB_EDITION);
+    this._snackBar.open(MESSAGES.SUCCESS.COLLAB_EDITION);
+  }
+  
+  reactToLoadError(): void {
+    this._snackBar.open(MESSAGES.ERROR.GETTING_COLLABORATOR, GLOBAL.OK);
+    this.router.navigate(['']);
   }
   
   navigateToDetails(): void {

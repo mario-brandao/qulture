@@ -5,6 +5,8 @@ export const MESSAGES = Object.freeze({
     COLLAB_CREATION: 'Error registering collaborator',
     COLLAB_EDITION: 'Error updating collaborator',
     GETTING_COMMENTS: 'Error getting comments',
+    GETTING_COLLABORATOR: 'Error getting collaborator',
+    FIX_VALUES: 'Please, fix values before sending',
   }),
   SUCCESS: Object.freeze({
     COLLAB_CREATION: 'Collaborator was successfully registered',

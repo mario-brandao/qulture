@@ -2,7 +2,7 @@
 
 html { font-size: 62.5%; }
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #f7f7f7;}
 .container {
   display: block;
   width: 100%;
@@ -17,6 +17,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   .mat-button-base {
     margin: 0 1rem;
   }
+}
+.comments-title {
+  margin-bottom: 1.5rem;
 }
 
 @media (min-width: 640px) {

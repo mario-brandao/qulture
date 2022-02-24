@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private collaboratorService: CollaboratorService,
     private router: Router,
+    private _snackBar: MatSnackBar,
   ) {
     this.form = null;
   }
@@ -36,7 +38,7 @@ export class RegisterComponent implements OnInit {
       email: new FormControl(null, Validators.compose([
         Validators.required, Validators.email
       ])),
-      photo_url: new FormControl(null),
+      photo_url: new FormControl(null, Validators.required),
       job_title: new FormControl(null, Validators.compose([
         Validators.required, Validators.minLength(3)
       ])),
@@ -45,11 +47,14 @@ export class RegisterComponent implements OnInit {
   }
 
   async save(): Promise<void> {
+    if (this.form?.invalid) {
+      this._snackBar.open(MESSAGES.ERROR.FIX_VALUES, GLOBAL.OK);
+      return;
+    }
     const $subject = this.collaboratorService.create(this.form?.value);
     const result: {user: Collaborator} | Object = await lastValueFrom($subject);
-    console.log(result);
     if (!result.hasOwnProperty(GLOBAL.USER)) {
-      window.alert(MESSAGES.ERROR.COLLAB_CREATION);
+      this._snackBar.open(MESSAGES.ERROR.COLLAB_CREATION, GLOBAL.OK);
       return;
     }
     this.navigateToDetails((result as {user: Collaborator}).user.id);

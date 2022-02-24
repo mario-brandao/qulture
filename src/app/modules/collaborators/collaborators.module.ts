@@ -8,7 +8,6 @@ import { TableComponent } from './components/table/table.component';
 import { DetailsComponent } from './components/details/details.component';
 import { RegisterComponent } from './components/register/register.component';
 import { EditComponent } from './components/edit/edit.component';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 
 @NgModule({

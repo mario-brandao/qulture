@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Subscription } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
 import { ROUTES } from 'src/app/modules/shared/constants/routes.constants';
 import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
 
 @Component({
   selector: 'app-details',
@@ -19,7 +21,9 @@ export class DetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private collaboratorService: CollaboratorService
+    private collaboratorService: CollaboratorService,
+    private _snackBar: MatSnackBar,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +37,9 @@ export class DetailsComponent implements OnInit {
   reactToRouteParams(): void {
     const routeSubscription = this.route.params.subscribe((params: {[key: string]: string}) => {
       const idParam = +params['id'];
-      if (!isNaN(idParam)) {
+      if (isNaN(idParam)) {
+        this.reactToLoadError();
+      } else {
         this.getCollaboratorByRoute(idParam);
       }
     });
@@ -45,11 +51,16 @@ export class DetailsComponent implements OnInit {
     const result: {users: Collaborator} | Object = await lastValueFrom($subject);
 
     if (!result.hasOwnProperty(GLOBAL.USER)) {
-      window.alert('Error');
+      this.reactToLoadError();
       return;
     }
 
     this.collaborator = (result as {user: Collaborator}).user;
+  }
+
+  reactToLoadError(): void {
+    this._snackBar.open(MESSAGES.ERROR.GETTING_COLLABORATOR, GLOBAL.OK);
+    this.router.navigate(['']);
   }
 
 }

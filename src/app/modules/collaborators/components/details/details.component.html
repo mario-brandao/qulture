@@ -18,5 +18,10 @@
     </mat-card-actions>
   </mat-card>
   
-  <app-comments class="col-xs-12 col-md-4" [userId]="collaborator.id"></app-comments>
+  <div class="col-xs-12 col-md-4">
+    <mat-card class="comments-title">
+      <mat-card-title>Comentários</mat-card-title>
+    </mat-card>
+    <app-comments [userId]="collaborator.id" [showVoidMessage]="true"></app-comments>
+  </div>
 </div>
