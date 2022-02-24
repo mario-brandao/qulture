@@ -84,6 +84,10 @@ export class EditComponent implements OnInit {
   }
 
   async update(): Promise<void> {
+    if (this.form?.invalid) {
+      this._snackBar.open(MESSAGES.ERROR.FIX_VALUES, GLOBAL.OK);
+      return;
+    }
     const $subject = this.collaboratorService.patch(this.collaborator.id, this.form?.value);
     const result: {user: Collaborator} | Object = await lastValueFrom($subject);
     if (!result.hasOwnProperty(GLOBAL.USER)) {
@@ -91,6 +95,7 @@ export class EditComponent implements OnInit {
       return;
     }
     this._snackBar.open(MESSAGES.SUCCESS.COLLAB_EDITION);
+    this.navigateToDetails();
   }
   
   reactToLoadError(): void {
