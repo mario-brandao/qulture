@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { API } from 'src/app/modules/shared/constants/api.constants';
-import { CollaboratorResponse } from 'src/app/modules/shared/utils/interfaces/collaborator-response.interface';
-import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
-import { CollaboratorsResponse } from 'src/app/modules/shared/utils/interfaces/collaborators-response.interface';
+import { CollaboratorResponse } from 'src/app/modules/shared/utils/models/collaborator-response.model';
+import { Collaborator } from 'src/app/modules/shared/utils/models/collaborator.model';
+import { CollaboratorsResponse } from 'src/app/modules/shared/utils/models/collaborators-response.model';
 
 @Injectable({
   providedIn: 'root'

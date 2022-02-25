@@ -8,8 +8,8 @@ import { Subscription } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
 import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
 import { ROUTES } from 'src/app/modules/shared/constants/routes.constants';
-import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
-import { CollaboratorsResponse } from 'src/app/modules/shared/utils/interfaces/collaborators-response.interface';
+import { Collaborator } from 'src/app/modules/shared/utils/models/collaborator.model';
+import { CollaboratorsResponse } from 'src/app/modules/shared/utils/models/collaborators-response.model';
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { CollaboratorService } from 'src/app/repositories/collaborator/collabora
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements AfterViewInit, OnDestroy {
-  private _collaborators: Collaborator[] | null = null;
+  private _collaborators: Collaborator[] = [];
   consideredCommentAuthors: Collaborator[] = [];
   registerRoute = ROUTES.REGISTER;
 
@@ -58,10 +58,10 @@ export class TableComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  filterPredicate(data: Collaborator, filter: string): boolean {
-    const matchesName = data.name.toLowerCase().includes(filter);
-    const matchesEmail = data.email.toLowerCase().includes(filter);
-    const matchesRole = data.job_title.toLowerCase().includes(filter);
+  filterPredicate(collab: Collaborator, filter: string): boolean {
+    const matchesName = collab.name.toLowerCase().includes(filter);
+    const matchesEmail = collab.email.toLowerCase().includes(filter);
+    const matchesRole = collab.job_title.toLowerCase().includes(filter);
     return matchesName || matchesEmail || matchesRole;
   }
 

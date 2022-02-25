@@ -6,7 +6,7 @@ import { lastValueFrom } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
 import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
 import { ROUTES } from 'src/app/modules/shared/constants/routes.constants';
-import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
+import { Collaborator } from 'src/app/modules/shared/utils/models/collaborator.model';
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
 
 @Component({
@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
       this._snackBar.open(MESSAGES.ERROR.FIX_VALUES, GLOBAL.OK);
       return;
     }
-    
+
     this.collaboratorService.create(this.form?.value).subscribe({
       next: (result) => this.navigateToDetails((result as {user: Collaborator}).user.id),
       error: (_) => this._snackBar.open(MESSAGES.ERROR.COLLAB_CREATION, GLOBAL.OK)

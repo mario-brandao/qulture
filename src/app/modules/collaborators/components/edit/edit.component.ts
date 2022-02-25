@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
 import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
 import { ROUTES } from 'src/app/modules/shared/constants/routes.constants';
-import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
+import { Collaborator } from 'src/app/modules/shared/utils/models/collaborator.model';
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
 
 @Component({
@@ -85,7 +85,7 @@ export class EditComponent implements OnInit, OnDestroy {
       this._snackBar.open(MESSAGES.ERROR.FIX_VALUES, GLOBAL.OK);
       return;
     }
-    
+
     this.collaboratorService.patch(this.collaborator.id, this.form?.value).subscribe({
       next: (_) => {
         this._snackBar.open(MESSAGES.SUCCESS.COLLAB_EDITION);

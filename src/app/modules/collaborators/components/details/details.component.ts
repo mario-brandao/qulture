@@ -5,7 +5,7 @@ import { Subject, Subscription } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
 import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
 import { ROUTES } from 'src/app/modules/shared/constants/routes.constants';
-import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
+import { Collaborator } from 'src/app/modules/shared/utils/models/collaborator.model';
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
 import { CommentService } from 'src/app/repositories/comment/comment.service';
 
@@ -76,7 +76,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   reactToCommentError(): void {
     this._snackBar.open(MESSAGES.ERROR.SENDING_COMMENT, GLOBAL.OK);
   }
-  
+
   get collaborator(): Collaborator {
     return this._collaborator as Collaborator;
   }
@@ -84,6 +84,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   set collaborator(collaborator: Collaborator) {
     this._collaborator = collaborator;
   }
-  
+
 
 }

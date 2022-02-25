@@ -4,8 +4,8 @@ import { lastValueFrom, Subject } from 'rxjs';
 import { CommentService } from 'src/app/repositories/comment/comment.service';
 import { GLOBAL } from '../../constants/global.constants';
 import { MESSAGES } from '../../constants/messages.constants';
-import { Comment } from '../../utils/interfaces/comment';
-import { CommentResponse } from '../../utils/interfaces/comment-response.interface';
+import { Comment } from '../../utils/models/comment.model';
+import { CommentResponse } from '../../utils/models/comment-response.model';
 
 @Component({
   selector: 'app-comments',
