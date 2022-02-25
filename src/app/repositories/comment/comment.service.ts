@@ -16,26 +16,26 @@ export class CommentService {
 
   getByCollaborator(id: number): Observable<CommentResponse | Object> {
     return this.httpClient.get(`${API.COLLABORATORS}/${id}/${GLOBAL.COMMENTS}`)
-    .pipe(catchError(error => throwError(() => new Error(error))));
+    .pipe(catchError((error) => throwError(() => new Error(error.message))));
   }
 
   getById(id: number): Observable<Comment[] | Object> {
     return this.httpClient.get(`${API.COMMENTS}/${id}`)
-    .pipe(catchError(error => throwError(() => new Error(error))));
+    .pipe(catchError((error) => throwError(() => new Error(error.message))));
   }
 
   create(comment: NewCommentPayload): Observable<Comment[] | Object> {
     return this.httpClient.post(API.COMMENTS, comment)
-    .pipe(catchError(error => throwError(() => new Error(error))));
+    .pipe(catchError((error) => throwError(() => new Error(error.message))));
   }
 
   patch(id: number, comment: NewCommentPayload): Observable<Comment | Object> {
     return this.httpClient.patch(`${API.COMMENTS}/${id}`, comment)
-    .pipe(catchError(error => throwError(() => new Error(error))));
+    .pipe(catchError((error) => throwError(() => new Error(error.message))));
   }
 
   delete(id: number): Observable<any> {
     return this.httpClient.delete(`${API.COMMENTS}/${id}`)
-    .pipe(catchError(error => throwError(() => new Error(error))));
+    .pipe(catchError((error) => throwError(() => new Error(error.message))));
   }
 }

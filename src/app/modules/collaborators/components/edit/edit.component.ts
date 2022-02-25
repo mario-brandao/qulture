@@ -44,7 +44,7 @@ export class EditComponent implements OnInit {
       if (isNaN(idParam)) {
         this.reactToLoadError();
       } else {
-        this.getCollaboratorByRoute(idParam);
+        this.getCollaboratorById(idParam);
       }
     });
     this.subscriptions.add(routeSubscription);
@@ -70,32 +70,29 @@ export class EditComponent implements OnInit {
     this.form?.patchValue((this.collaborator as Collaborator));
   }
 
-  async getCollaboratorByRoute(id: number): Promise<void> {
-    const $subject = this.collaboratorService.getById(id);
-    const result: {users: Collaborator} | Object = await lastValueFrom($subject);
-
-    if (!result.hasOwnProperty(GLOBAL.USER)) {
-      this.reactToLoadError();
-      return;
-    }
-
-    this.collaborator = (result as {user: Collaborator}).user;
-    this.setFormInitialValues();
+  getCollaboratorById(id: number): void {
+    this.collaboratorService.getById(id).subscribe({
+      next: (result) => {
+        this.collaborator = (result as {user: Collaborator}).user;
+        this.setFormInitialValues();
+      },
+      error: (_) => this.reactToLoadError()
+    });
   }
 
-  async update(): Promise<void> {
+  update(): void {
     if (this.form?.invalid) {
       this._snackBar.open(MESSAGES.ERROR.FIX_VALUES, GLOBAL.OK);
       return;
     }
-    const $subject = this.collaboratorService.patch(this.collaborator.id, this.form?.value);
-    const result: {user: Collaborator} | Object = await lastValueFrom($subject);
-    if (!result.hasOwnProperty(GLOBAL.USER)) {
-      this._snackBar.open(MESSAGES.ERROR.COLLAB_EDITION, GLOBAL.OK);
-      return;
-    }
-    this._snackBar.open(MESSAGES.SUCCESS.COLLAB_EDITION);
-    this.navigateToDetails();
+    
+    this.collaboratorService.patch(this.collaborator.id, this.form?.value).subscribe({
+      next: (_) => {
+        this._snackBar.open(MESSAGES.SUCCESS.COLLAB_EDITION);
+        this.navigateToDetails();
+      },
+      error: (_) => this._snackBar.open(MESSAGES.ERROR.COLLAB_EDITION, GLOBAL.OK)
+    });
   }
 
   reactToLoadError(): void {

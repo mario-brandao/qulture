@@ -1,5 +1,9 @@
 
 <mat-card *ngFor="let comment of comments" class="comment">
+  <ng-container *ngIf="showUserData">
+    <img mat-card-avatar src="{{ comment.user.photo_url }}">
+    <mat-card-subtitle>{{ comment.user.name }}</mat-card-subtitle>
+  </ng-container>
   <mat-card-content>
     <p>{{ comment.value }}</p>
   </mat-card-content>

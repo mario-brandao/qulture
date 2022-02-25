@@ -51,13 +51,11 @@ export class RegisterComponent implements OnInit {
       this._snackBar.open(MESSAGES.ERROR.FIX_VALUES, GLOBAL.OK);
       return;
     }
-    const $subject = this.collaboratorService.create(this.form?.value);
-    const result: {user: Collaborator} | Object = await lastValueFrom($subject);
-    if (!result.hasOwnProperty(GLOBAL.USER)) {
-      this._snackBar.open(MESSAGES.ERROR.COLLAB_CREATION, GLOBAL.OK);
-      return;
-    }
-    this.navigateToDetails((result as {user: Collaborator}).user.id);
+    
+    this.collaboratorService.create(this.form?.value).subscribe({
+      next: (result) => this.navigateToDetails((result as {user: Collaborator}).user.id),
+      error: (_) => this._snackBar.open(MESSAGES.ERROR.COLLAB_CREATION, GLOBAL.OK)
+    });
   }
 
   navigateToDetails(id: number): void {

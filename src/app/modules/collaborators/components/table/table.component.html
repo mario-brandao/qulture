@@ -59,6 +59,6 @@
     <mat-card class="comments-title">
       <mat-card-title>Comentários</mat-card-title>
     </mat-card>
-    <app-comments *ngFor="let user of consideredCommentAuthors" [userId]="user.id"></app-comments>
+    <app-comments *ngFor="let user of consideredCommentAuthors" [userId]="user.id" [showUserData]="true"></app-comments>
   </div>
 </div>

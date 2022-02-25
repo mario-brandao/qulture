@@ -44,21 +44,18 @@ export class TableComponent implements AfterViewInit, OnDestroy {
   }
 
   async getCollaborators(): Promise<void> {
-    const $subject = this.collaboratorService.getAll();
-    const result: CollaboratorsResponse | Object = await lastValueFrom($subject);
-
-    if (!result.hasOwnProperty(GLOBAL.USERS)) {
-      this._snackBar.open(MESSAGES.ERROR.COLLAB_LISTING, GLOBAL.OK);
-      return;
-    }
-
-    this.collaborators = (result as CollaboratorsResponse).users;
-    this.dataSource = new MatTableDataSource<Collaborator>(this.collaborators);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.dataSource.filterPredicate = this.filterPredicate;
-    this.watchVisibleCollaborators();
-    this.setConsideredCommentAuthors();
+    this.collaboratorService.getAll().subscribe({
+      next: (result) => {
+        this.collaborators = (result as CollaboratorsResponse).users;
+        this.dataSource = new MatTableDataSource<Collaborator>(this.collaborators);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.dataSource.filterPredicate = this.filterPredicate;
+        this.watchVisibleCollaborators();
+        this.setConsideredCommentAuthors();
+      },
+      error: (_) => this._snackBar.open(MESSAGES.ERROR.COLLAB_LISTING, GLOBAL.OK)
+    });
   }
 
   filterPredicate(data: Collaborator, filter: string): boolean {
