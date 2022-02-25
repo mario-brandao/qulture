@@ -4,5 +4,6 @@ export const GLOBAL = Object.freeze({
   USER: 'user',
   USERS: 'users',
   COMMENTS: 'comments',
+  COMMENT: 'comment',
   OK: 'OK',
 });

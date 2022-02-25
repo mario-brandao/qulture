@@ -1,27 +1,45 @@
 
 <div *ngIf="collaborator" class="row">
   <mat-card class="col-xs-12 col-md-8">
-    <img mat-card-avatar src="{{ collaborator.photo_url }}">
-    <mat-card-title>{{ collaborator.name }}</mat-card-title>
-    <mat-card-subtitle>{{ collaborator.email }}</mat-card-subtitle>
-    <mat-card-content>
-      <p><b>Role:</b> {{ collaborator.job_title }}</p>
-      <p><b>Admission date:</b> {{ collaborator.admission_date }}</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <a
-        [routerLink]="[editRoute, collaborator.id]"
-        mat-raised-button
-        color="primary">
-        Edit
-      </a>
-    </mat-card-actions>
+    <div class="row">
+      <div class="col-xs-12">
+        <img mat-card-avatar src="{{ collaborator.photo_url }}">
+        <mat-card-title>{{ collaborator.name }}</mat-card-title>
+        <mat-card-subtitle>{{ collaborator.job_title }}</mat-card-subtitle>
+        <mat-card-content>
+          <p><b>E-mail:</b> {{ collaborator.email }}</p>
+          <p><b>Admission date:</b> {{ collaborator.admission_date }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a
+            [routerLink]="[editRoute, collaborator.id]"
+            mat-raised-button
+            color="primary">
+            Edit
+          </a>
+        </mat-card-actions>
+      </div>
+      <div class="col-xs-12 comment-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Comment</mat-label>
+          <textarea #commentField matInput placeholder="Type your comment..."></textarea>
+        </mat-form-field>
+        
+        <button
+          mat-mini-fab
+          (click)="sendComment(commentField.value)"
+          color="primary"
+          class="btn-send">
+          <mat-icon matSuffix>send</mat-icon>
+        </button>
+      </div>
+    </div>
   </mat-card>
   
   <div class="col-xs-12 col-md-4">
     <mat-card class="comments-title">
       <mat-card-title>Comentários</mat-card-title>
     </mat-card>
-    <app-comments [userId]="collaborator.id" [showVoidMessage]="true"></app-comments>
+    <app-comments [userId]="collaborator.id" [showVoidMessage]="true" [$updateSubject]="$updateComments"></app-comments>
   </div>
 </div>
