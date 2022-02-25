@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, lastValueFrom, Subject, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { GLOBAL } from 'src/app/modules/shared/constants/global.constants';
 import { MESSAGES } from 'src/app/modules/shared/constants/messages.constants';
 import { ROUTES } from 'src/app/modules/shared/constants/routes.constants';
-import { CollaboratorResponse } from 'src/app/modules/shared/utils/interfaces/collaborator-response.interface';
 import { Collaborator } from 'src/app/modules/shared/utils/interfaces/collaborator.interface';
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
 import { CommentService } from 'src/app/repositories/comment/comment.service';
@@ -15,7 +14,7 @@ import { CommentService } from 'src/app/repositories/comment/comment.service';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
 
   private _collaborator!: Collaborator;
   private $subscriptions = new Subscription();

@@ -13,7 +13,7 @@ import { CollaboratorsResponse } from 'src/app/modules/shared/utils/interfaces/c
 import { CollaboratorService } from 'src/app/repositories/collaborator/collaborator.service';
 
 @Component({
-  selector: 'collaborators-table',
+  selector: 'app-collaborators-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
